@@ -343,6 +343,16 @@ advanced menus with two-level submenus and all kind of items:
                     - { label: 'New Invoice', icon: 'file-new', route: 'createInvoice' }
                     - { label: 'Invoices', icon: 'file-list', entity: 'Invoice', permission: 'ROLE_ACCOUNTANT' }
                     - { label: 'Payments Received', entity: 'Payment', params: { sortField: 'paidAt' } }
+                - label: Products
+                  children:
+                    - label: 'New Product'
+                      children:
+                        - label: 'Import Product'
+                          entity: Product
+                          params: { action: 'import' }
+                        - label: 'Manual Product'
+                          entity: Product
+                          params: { action: 'new' }
                 - label: 'About'
                   children:
                     - { label: 'Help', route: 'help_index' }

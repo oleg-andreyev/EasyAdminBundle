@@ -12,27 +12,25 @@ class MenuConfigPass implements ConfigPassInterface
 {
     public function process(array $backendConfig)
     {
-        // process 1st level menu items
-        $menuConfig = $backendConfig['design']['menu'];
-        $menuConfig = $this->normalizeMenuConfig($menuConfig, $backendConfig);
-        $menuConfig = $this->processMenuConfig($menuConfig, $backendConfig);
+        $backendConfig['design']['menu'] = $this->processMenu($backendConfig['design']['menu'], $backendConfig);
 
-        $backendConfig['design']['menu'] = $menuConfig;
+        return $backendConfig;
+    }
 
-        // process 2nd level menu items (i.e. submenus)
-        foreach ($backendConfig['design']['menu'] as $i => $itemConfig) {
+    private function processMenu(array $menuConfig, array $backendConfig, int $parentItemIndex = -1)
+    {
+        $menuConfig = $this->normalizeMenuConfig($menuConfig, $backendConfig, $parentItemIndex);
+        $menuConfig = $this->processMenuConfig($menuConfig, $backendConfig, $parentItemIndex);
+
+        foreach ($menuConfig as $i => &$itemConfig) {
             if (empty($itemConfig['children'])) {
                 continue;
             }
 
-            $submenuConfig = $itemConfig['children'];
-            $submenuConfig = $this->normalizeMenuConfig($submenuConfig, $backendConfig, $i);
-            $submenuConfig = $this->processMenuConfig($submenuConfig, $backendConfig, $i);
-
-            $backendConfig['design']['menu'][$i]['children'] = $submenuConfig;
+            $itemConfig['children'] = $this->processMenu($itemConfig['children'], $backendConfig, $i);
         }
 
-        return $backendConfig;
+        return $menuConfig;
     }
 
     /**
