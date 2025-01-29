@@ -59,6 +59,9 @@ final class EntityFactory
     public function processActionsForAll(EntityCollection $entities, ActionConfigDto $actionConfigDto): ActionCollection
     {
         foreach ($entities as $entity) {
+            if (!$entity->isAccessible()) {
+                continue;
+            }
             $this->processActions($entity, clone $actionConfigDto);
         }
 
