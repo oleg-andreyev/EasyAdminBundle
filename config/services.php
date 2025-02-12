@@ -339,7 +339,8 @@ return static function (ContainerConfigurator $container) {
 
         ->set(BooleanConfigurator::class)
             ->arg(0, service(AdminUrlGenerator::class))
-            ->arg(1, new Reference('security.csrf.token_manager', ContainerInterface::NULL_ON_INVALID_REFERENCE))
+            ->arg(1, new Reference(AuthorizationChecker::class))
+            ->arg(2, new Reference('security.csrf.token_manager', ContainerInterface::NULL_ON_INVALID_REFERENCE))
 
         ->set(CollectionConfigurator::class)
 
