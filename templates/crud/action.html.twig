@@ -15,4 +15,15 @@
             {%- if action.label is not empty -%}<span class="action-label">{{ action.label|trans|raw }}</span>{%- endif -%}
         </span>
     </button>
+{% elseif 'form' == action.htmlElement %}
+    {%- set form_id = 'form-' ~ action.name ~ '-' ~ random() -%}
+    {%- do action.setHtmlAttribute('form', form_id) -%}
+    <form action="{{ action.linkUrl }}" method="POST" id="{{ form_id }}">
+        <button class="{{ action.cssClass }}" {% for name, value in action.htmlAttributes %}{{ name }}="{{ (value.trans is defined ? value|trans : value)|e('html') }}" {% endfor %}>
+            <span class="btn-label">
+                {%- if action.icon %}<twig:ea:Icon name="{{ action.icon }}"/> {% endif -%}
+                {%- if action.label is not empty -%}<span class="action-label">{{ action.label|trans|raw }}</span>{%- endif -%}
+            </span>
+        </button>
+    </form>
 {% endif %}

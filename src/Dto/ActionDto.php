@@ -293,6 +293,8 @@ final class ActionDto
 
         if ('a' === $this->htmlElement) {
             $action->displayAsLink();
+        } elseif ('form' === $this->htmlElement) {
+            $action->displayAsForm();
         } else {
             $action->displayAsButton();
         }

@@ -33,7 +33,7 @@
         "symfony/security-bundle": "^5.4|^6.0|^7.0",
         "symfony/string": "^5.4|^6.0|^7.0",
         "symfony/translation": "^5.4|^6.0|^7.0",
-        "symfony/twig-bridge": "^5.4,>=5.4.48|^6.0,>=6.4.16|^7.0,>=7.1.9",
+        "symfony/twig-bridge": "^5.4.48|^6.4.16|^7.1.9",
         "symfony/twig-bundle": "^5.4|^6.0|^7.0",
         "symfony/uid": "^5.4|^6.0|^7.0",
         "symfony/ux-twig-component": "^2.21",

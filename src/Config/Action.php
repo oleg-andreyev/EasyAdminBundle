@@ -158,6 +158,13 @@ final class Action
         return $this;
     }
 
+    public function displayAsForm(): self
+    {
+        $this->dto->setHtmlElement('form');
+
+        return $this;
+    }
+
     public function setHtmlAttributes(array $attributes): self
     {
         $this->dto->setHtmlAttributes($attributes);
