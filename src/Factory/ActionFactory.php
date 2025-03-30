@@ -166,7 +166,7 @@ final class ActionFactory
         }
 
         if (\is_callable($label) && $label instanceof \Closure) {
-            $label = \call_user_func_array($label, array_filter([$entityDto?->getInstance()]));
+            $label = \call_user_func_array($label, array_filter([$entityDto?->getInstance()], static fn ($item): bool => null !== $item));
 
             if (!\is_string($label) && !$label instanceof TranslatableInterface) {
                 throw new \RuntimeException(sprintf('The callable used to define the label of the "%s" action label %s must return a string or a %s instance but it returned a(n) "%s" value instead.', $actionDto->getName(), null !== $entityDto ? 'in the "'.$entityDto->getName().'" entity' : '', TranslatableInterface::class, \gettype($label)));

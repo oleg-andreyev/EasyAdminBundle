@@ -5,9 +5,13 @@ namespace EasyCorp\Bundle\EasyAdminBundle\Dto;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\Mapping\FieldMapping;
 use Doctrine\ORM\Mapping\ManyToManyAssociationMapping;
+use Doctrine\ORM\Mapping\ManyToManyInverseSideMapping;
+use Doctrine\ORM\Mapping\ManyToManyOwningSideMapping;
 use Doctrine\ORM\Mapping\ManyToOneAssociationMapping;
 use Doctrine\ORM\Mapping\OneToManyAssociationMapping;
 use Doctrine\ORM\Mapping\OneToOneAssociationMapping;
+use Doctrine\ORM\Mapping\OneToOneInverseSideMapping;
+use Doctrine\ORM\Mapping\OneToOneOwningSideMapping;
 use EasyCorp\Bundle\EasyAdminBundle\Collection\ActionCollection;
 use EasyCorp\Bundle\EasyAdminBundle\Collection\FieldCollection;
 use EasyCorp\Bundle\EasyAdminBundle\Config\KeyValueStore;
@@ -168,6 +172,7 @@ final class EntityDto
     {
         if (\array_key_exists($propertyName, $this->metadata->fieldMappings)) {
             /** @var FieldMapping|array $fieldMapping */
+            /** @phpstan-ignore-next-line */
             $fieldMapping = $this->metadata->fieldMappings[$propertyName];
             // Doctrine ORM 2.x returns an array and Doctrine ORM 3.x returns a FieldMapping object
             if ($fieldMapping instanceof FieldMapping) {
@@ -178,7 +183,7 @@ final class EntityDto
         }
 
         if (\array_key_exists($propertyName, $this->metadata->associationMappings)) {
-            /** @var OneToOneAssociationMapping|OneToManyAssociationMapping|ManyToOneAssociationMapping|ManyToManyAssociationMapping|array $associationMapping */
+            /** @var OneToOneOwningSideMapping|OneToOneInverseSideMapping|ManyToOneAssociationMapping|OneToManyAssociationMapping|ManyToManyOwningSideMapping|ManyToManyInverseSideMapping $associationMapping */
             $associationMapping = $this->metadata->associationMappings[$propertyName];
             // Doctrine ORM 2.x returns an array and Doctrine ORM 3.x returns one of the many *Mapping objects
             // there's not a single interface implemented by all of them, so let's only check if it's an object

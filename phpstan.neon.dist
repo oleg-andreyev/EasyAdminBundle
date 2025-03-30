@@ -8,6 +8,7 @@ parameters:
     excludePaths:
         analyse:
             - src/ArgumentResolver
+            - src/Test/Trait/CrudTestFormAsserts.php
     bootstrapFiles:
         - vendor/bin/.phpunit/phpunit/vendor/autoload.php
     ignoreErrors:

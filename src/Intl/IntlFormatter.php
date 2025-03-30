@@ -108,7 +108,6 @@ final class IntlFormatter implements IntlFormatterInterface
     public function formatCurrency($amount, string $currency, array $attrs = [], ?string $locale = null): string
     {
         $formatter = $this->createNumberFormatter($locale, 'currency', $attrs);
-        /** @var string|false $formattedCurrency */
         $formattedCurrency = $formatter->formatCurrency($amount, $currency);
         if (false === $formattedCurrency) {
             throw new RuntimeError('Unable to format the given number as a currency.');

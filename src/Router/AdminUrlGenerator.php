@@ -369,7 +369,7 @@ final class AdminUrlGenerator implements AdminUrlGeneratorInterface
                 EA::CRUD_CONTROLLER_FQCN => $adminContext->getRequest()->attributes->get(EA::CRUD_CONTROLLER_FQCN),
                 EA::CRUD_ACTION => $adminContext->getRequest()->attributes->get(EA::CRUD_ACTION),
                 EA::ENTITY_ID => $adminContext->getRequest()->attributes->get(EA::ENTITY_ID),
-            ]);
+            ], static fn ($value): bool => null !== $value);
             $currentRouteParameters = $routeParametersForReferrer = array_merge($routeParameters, $adminContext->getRequest()->query->all());
             unset($routeParametersForReferrer[EA::REFERRER]);
             $this->currentPageReferrer = sprintf('%s%s?%s', $adminContext->getRequest()->getBaseUrl(), $adminContext->getRequest()->getPathInfo(), http_build_query($routeParametersForReferrer));

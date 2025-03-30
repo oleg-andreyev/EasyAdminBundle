@@ -388,8 +388,8 @@ The arguments of the ``addColumn()`` method are:
 
 * ``$cols``: (type: ``int|string``) the width of the column defined as any value
   compatible with the `Bootstrap grid system`_  (e.g. ``'col-6'``, ``'col-md-6 col-xl-4'``,
-  etc.). Integer values are transformed like this: N -> 'col-N' (e.g. ``8`` is
-  transformed to ``col-8``);
+  etc.). Integer values are transformed like this: N -> 'col-md-N' (e.g. ``8`` is
+  transformed to ``col-md-8``);
 * ``$label``: (type: ``TranslatableInterface|string|false|null``) an optional title
   that is displayed at the top of the column. If you pass ``false``, ``null``
   or an empty string, no title is displayed. You can also pass ``string`` and
