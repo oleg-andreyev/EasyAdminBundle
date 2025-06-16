@@ -12,6 +12,8 @@ use function Symfony\Component\Translation\t;
 
 /**
  * Tests the configureActions() method and the generated actions.
+ *
+ * @extends AbstractCrudController<Category>
  */
 class ActionsCrudController extends AbstractCrudController
 {

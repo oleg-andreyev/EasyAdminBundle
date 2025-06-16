@@ -105,7 +105,7 @@ final class IntlFormatter implements IntlFormatterInterface
     private array $dateFormatters = [];
     private array $numberFormatters = [];
 
-    public function formatCurrency($amount, string $currency, array $attrs = [], ?string $locale = null): string
+    public function formatCurrency(int|float $amount, string $currency, array $attrs = [], ?string $locale = null): string
     {
         $formatter = $this->createNumberFormatter($locale, 'currency', $attrs);
         $formattedCurrency = $formatter->formatCurrency($amount, $currency);
@@ -270,6 +270,9 @@ final class IntlFormatter implements IntlFormatterInterface
         return $this->numberFormatters[$hash];
     }
 
+    /**
+     * @param \DateTimeZone|string|bool|null $timezone $timezone
+     */
     private function convertDate(?\DateTimeInterface $date, $timezone = null): ?\DateTimeInterface
     {
         if (null === $date) {

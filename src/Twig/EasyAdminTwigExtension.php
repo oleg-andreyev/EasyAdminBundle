@@ -76,6 +76,11 @@ class EasyAdminTwigExtension extends AbstractExtension implements GlobalsInterfa
     /**
      * Transforms ['a' => 'foo', 'b' => ['c' => ['d' => 7]]] into ['a' => 'foo', 'b[c][d]' => 7]
      * It's useful to submit nested arrays (e.g. query string parameters) as form fields.
+     *
+     * @param mixed[]     $array
+     * @param string|null $parentKey
+     *
+     * @return mixed[]
      */
     public function flattenArray($array, $parentKey = null): array
     {
@@ -97,17 +102,27 @@ class EasyAdminTwigExtension extends AbstractExtension implements GlobalsInterfa
     public function fileSize(int $bytes): string
     {
         $size = ['B', 'K', 'M', 'G', 'T', 'P', 'E', 'Z', 'Y'];
-        $factor = (int) floor(log($bytes) / log(1024));
 
-        return (int) ($bytes / (1024 ** $factor)).@$size[$factor];
+        if (0 === $bytes) {
+            return '0B';
+        }
+
+        $factor = (int) floor(log($bytes) / log(1024));
+        $factor = min($factor, \count($size) - 1);
+
+        $scaledValue = (int) ($bytes / (1024 ** $factor));
+
+        return sprintf('%d%s', $scaledValue, $size[$factor]);
     }
 
     /**
      * Code adapted from https://stackoverflow.com/a/48606773/2804294 (License: CC BY-SA 3.0).
      *
+     * @return mixed
+     *
      * @throws RuntimeError when twig runtime can't find the specified filter
      */
-    public function applyFilterIfExists(Environment $environment, $value, string $filterName, ...$filterArguments)
+    public function applyFilterIfExists(Environment $environment, mixed $value, string $filterName, mixed ...$filterArguments)
     {
         /**
          * @var TwigFilter|null $filter
@@ -134,7 +149,7 @@ class EasyAdminTwigExtension extends AbstractExtension implements GlobalsInterfa
         throw new RuntimeError(sprintf('Invalid callback for filter: "%s"', $filterName));
     }
 
-    public function representAsString($value, string|callable|null $toStringMethod = null): string
+    public function representAsString(mixed $value, string|callable|null $toStringMethod = null): string
     {
         if (null !== $toStringMethod) {
             if (\is_callable($toStringMethod)) {
@@ -198,7 +213,10 @@ class EasyAdminTwigExtension extends AbstractExtension implements GlobalsInterfa
         return '';
     }
 
-    public function callFunctionIfExists(Environment $environment, string $functionName, ...$functionArguments)
+    /**
+     * @return mixed
+     */
+    public function callFunctionIfExists(Environment $environment, string $functionName, mixed ...$functionArguments)
     {
         if (null === $function = $environment->getFunction($functionName)) {
             return '';

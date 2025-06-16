@@ -52,9 +52,12 @@ $logicalCssProperties = [
 
 $directory = __DIR__.'/../../../assets';
 
-return lintCssFiles($directory, $logicalCssProperties);
+exit(lintCssFiles($directory, $logicalCssProperties));
 
-function lintCssFiles($directory, $logicalCssProperties): int
+/**
+ * @param array<string, string> $logicalCssProperties
+ */
+function lintCssFiles(string $directory, array $logicalCssProperties): int
 {
     $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($directory));
     $cssFiles = new RegexIterator($files, '/\.css$/');
@@ -75,7 +78,10 @@ function lintCssFiles($directory, $logicalCssProperties): int
     return 0;
 }
 
-function lintFileCssProperties($file, $logicalCssProperties): int
+/**
+ * @param array<string, string> $logicalCssProperties
+ */
+function lintFileCssProperties(string $file, array $logicalCssProperties): int
 {
     $numErrors = 0;
     $lines = file($file);

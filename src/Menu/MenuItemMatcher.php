@@ -343,13 +343,11 @@ class MenuItemMatcher implements MenuItemMatcherInterface
      * Sorts an array recursively by its keys. This is needed because some values
      * of the array with the query string parameters can be arrays too, and we must
      * sort those before the comparison.
+     *
+     * @param mixed[] &$array
      */
-    private function recursiveKsort(&$array): void
+    private function recursiveKsort(array &$array): void
     {
-        if (!\is_array($array)) {
-            return;
-        }
-
         ksort($array);
 
         foreach ($array as &$value) {

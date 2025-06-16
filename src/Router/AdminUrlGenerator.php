@@ -66,7 +66,7 @@ final class AdminUrlGenerator implements AdminUrlGeneratorInterface
         return $this;
     }
 
-    public function setEntityId($entityId): AdminUrlGeneratorInterface
+    public function setEntityId(mixed $entityId): AdminUrlGeneratorInterface
     {
         $this->setRouteParameter(EA::ENTITY_ID, $entityId);
 
@@ -82,7 +82,7 @@ final class AdminUrlGenerator implements AdminUrlGeneratorInterface
         return $this->routeParameters[$paramName] ?? null;
     }
 
-    public function set(string $paramName, $paramValue): AdminUrlGeneratorInterface
+    public function set(string $paramName, mixed $paramValue): AdminUrlGeneratorInterface
     {
         if (\in_array($paramName, [EA::MENU_INDEX, EA::SUBMENU_INDEX], true)) {
             trigger_deprecation(
@@ -331,7 +331,7 @@ final class AdminUrlGenerator implements AdminUrlGeneratorInterface
         return $url;
     }
 
-    private function setRouteParameter(string $paramName, $paramValue): void
+    private function setRouteParameter(string $paramName, mixed $paramValue): void
     {
         if (false === $this->isInitialized) {
             $this->initialize();

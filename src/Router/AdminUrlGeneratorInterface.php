@@ -18,11 +18,11 @@ interface AdminUrlGeneratorInterface
         array $routeParameters = [],
     ): self;
 
-    public function setEntityId($entityId): self;
+    public function setEntityId(mixed $entityId): self;
 
     public function get(string $paramName): mixed;
 
-    public function set(string $paramName, $paramValue): self;
+    public function set(string $paramName, mixed $paramValue): self;
 
     public function setAll(array $routeParameters): self;
 

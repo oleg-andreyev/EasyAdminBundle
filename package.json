@@ -2,6 +2,7 @@
   "devDependencies": {
     "@babel/core": "^7.26.0",
     "@babel/preset-env": "^7.16.0",
+    "@biomejs/biome": "^1.9.4",
     "@fortawesome/fontawesome-free": "^6.7.1",
     "@popperjs/core": "^2.11.5",
     "@symfony/webpack-encore": "^5.0.1",
@@ -26,7 +27,8 @@
     "dev-server": "encore dev-server",
     "dev": "encore dev",
     "watch": "encore dev --watch",
-    "build": "encore production"
+    "build": "encore production",
+    "ci": "biome ci"
   },
   "dependencies": {}
 }

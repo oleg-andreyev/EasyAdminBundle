@@ -21,7 +21,7 @@ fixFontPathsInCssFiles($manifestJsonPath);
 //   'app.css' => '/app.1e1ba55d.css'
 //
 // This function removes that leading slash from all asset paths.
-function fixManifestJsonEntriesPaths(string $manifestJsonPath)
+function fixManifestJsonEntriesPaths(string $manifestJsonPath): void
 {
     $manifestJsonContents = json_decode(file_get_contents($manifestJsonPath), associative: true, flags: \JSON_THROW_ON_ERROR);
     $fixedManifestJsonContents = [];
@@ -42,7 +42,7 @@ function fixManifestJsonEntriesPaths(string $manifestJsonPath)
 // We need something like this instead:
 // @font-face{font-family:FontAwesome;src:url(fonts/fa-v4compatibility.afac8956.woff2) format("woff2")
 // There might be some way of doing this in Webpack Encore, but I can't find it, so let's be pragmatic.
-function fixFontPathsInCssFiles(string $manifestJsonPath)
+function fixFontPathsInCssFiles(string $manifestJsonPath): void
 {
     $manifestJsonContents = json_decode(file_get_contents($manifestJsonPath), associative: true, flags: \JSON_THROW_ON_ERROR);
     foreach ($manifestJsonContents as $assetName => $assetPath) {
