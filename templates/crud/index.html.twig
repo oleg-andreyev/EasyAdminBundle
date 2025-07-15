@@ -106,7 +106,7 @@
 
                     {% set ea_sort_asc = constant('EasyCorp\\Bundle\\EasyAdminBundle\\Config\\Option\\SortOrder::ASC') %}
                     {% set ea_sort_desc = constant('EasyCorp\\Bundle\\EasyAdminBundle\\Config\\Option\\SortOrder::DESC') %}
-                    {% for field in fields|filter(f => f.isAccessible) %}
+                    {% for field in fields %}
                         {% set is_searchable = null == ea.crud.searchFields or field.property in ea.crud.searchFields %}
                         {% set is_sorting_field = ea.search.isSortingField(field.property) %}
                         {% set next_sort_direction = is_sorting_field ? (ea.search.sortDirection(field.property) == ea_sort_desc ? ea_sort_asc : ea_sort_desc) : ea_sort_desc %}
