@@ -4,11 +4,14 @@ namespace EasyCorp\Bundle\EasyAdminBundle\Contracts\Provider;
 
 use EasyCorp\Bundle\EasyAdminBundle\Collection\FieldCollection;
 use EasyCorp\Bundle\EasyAdminBundle\Contracts\Field\FieldInterface;
+use EasyCorp\Bundle\EasyAdminBundle\Dto\FieldDto;
 
 interface FieldProviderInterface
 {
     /**
-     * @return FieldCollection<FieldInterface>
+     * @param iterable<FieldInterface|string> $fields
+     *
+     * @return FieldCollection<FieldDto>
      */
     public function createCollection(iterable $fields): FieldCollection;
 
