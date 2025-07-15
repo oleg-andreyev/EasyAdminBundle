@@ -81,12 +81,15 @@ final class FieldFactory implements FieldFactoryInterface
 
         $isDetailOrIndex = \in_array($currentPage, [Crud::PAGE_INDEX, Crud::PAGE_DETAIL], true);
         foreach ($fields as $fieldDto) {
-            if ((null !== $currentPage && false === $fieldDto->isDisplayedOn($currentPage))
-                || false === $this->authorizationChecker->isGranted(Permission::EA_VIEW_FIELD, $fieldDto)) {
-                $fields->unset($fieldDto);
-
-                continue;
-            }
+            // TODO: this should be moved above and iterate once per page not per entity
+//            if (
+//                (null !== $currentPage && false === $fieldDto->isDisplayedOn($currentPage))
+//                || false === $this->authorizationChecker->isGranted(Permission::EA_VIEW_FIELD, $fieldDto)
+//            ) {
+//                $fields->unset($fieldDto);
+//
+//                continue;
+//            }
 
             // "form rows" only make sense in pages that contain forms
             if ($isDetailOrIndex && EaFormRowType::class === $fieldDto->getFormType()) {
