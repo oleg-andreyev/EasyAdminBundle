@@ -151,7 +151,7 @@
 
                         {% for field in entity.fields %}
                             {% if not field.isAccessible %}
-                                <twig:ea:Icon name="internal:lock" class="mr-1" />
+                                <td><twig:ea:Icon name="internal:lock" class="mr-1" /></td>
                             {% else %}
                                 {% set is_searchable = null == ea.crud.searchFields or field.property in ea.crud.searchFields %}
 
