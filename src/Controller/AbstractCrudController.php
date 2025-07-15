@@ -130,7 +130,7 @@ abstract class AbstractCrudController extends AbstractController implements Crud
             throw new ForbiddenActionException($context);
         }
 
-        $fields = FieldCollection::new($this->configureFields(Crud::PAGE_INDEX));
+        $fields = $this->container->get(FieldProviderInterface::class)->createCollection($this->configureFields(Crud::PAGE_INDEX));
         $filters = $this->container->get(FilterFactory::class)->create($context->getCrud()->getFiltersConfig(), $fields, $context->getEntity());
         $queryBuilder = $this->createIndexQueryBuilder($context->getSearch(), $context->getEntity(), $fields, $filters);
         $paginator = $this->container->get(PaginatorFactory::class)->create($queryBuilder);
@@ -184,7 +184,8 @@ abstract class AbstractCrudController extends AbstractController implements Crud
             throw new InsufficientEntityPermissionException($context);
         }
 
-        $this->container->get(EntityFactory::class)->processFields($context->getEntity(), FieldCollection::new($this->configureFields(Crud::PAGE_DETAIL)));
+        $fields = $this->container->get(FieldProviderInterface::class)->createCollection($this->configureFields(Crud::PAGE_DETAIL));
+        $this->container->get(EntityFactory::class)->processFields($context->getEntity(), $fields);
         $context->getCrud()->setFieldAssets($this->getFieldAssets($context->getEntity()->getFields()));
         $this->container->get(EntityFactory::class)->processActions($context->getEntity(), $context->getCrud()->getActionsConfig());
 
@@ -219,7 +220,8 @@ abstract class AbstractCrudController extends AbstractController implements Crud
             throw new InsufficientEntityPermissionException($context);
         }
 
-        $this->container->get(EntityFactory::class)->processFields($context->getEntity(), FieldCollection::new($this->configureFields(Crud::PAGE_EDIT)));
+        $fields = $this->container->get(FieldProviderInterface::class)->createCollection($this->configureFields(Crud::PAGE_EDIT));
+        $this->container->get(EntityFactory::class)->processFields($context->getEntity(), $fields);
         $context->getCrud()->setFieldAssets($this->getFieldAssets($context->getEntity()->getFields()));
         $this->container->get(EntityFactory::class)->processActions($context->getEntity(), $context->getCrud()->getActionsConfig());
         /** @var TEntity $entityInstance */
@@ -305,7 +307,8 @@ abstract class AbstractCrudController extends AbstractController implements Crud
         /** @var class-string<TEntity> $entityFqcn */
         $entityFqcn = $context->getEntity()->getFqcn();
         $context->getEntity()->setInstance($this->createEntity($entityFqcn));
-        $this->container->get(EntityFactory::class)->processFields($context->getEntity(), FieldCollection::new($this->configureFields(Crud::PAGE_NEW)));
+        $fields = $this->container->get(FieldProviderInterface::class)->createCollection($this->configureFields(Crud::PAGE_NEW));
+        $this->container->get(EntityFactory::class)->processFields($context->getEntity(), $fields);
         $context->getCrud()->setFieldAssets($this->getFieldAssets($context->getEntity()->getFields()));
         $this->container->get(EntityFactory::class)->processActions($context->getEntity(), $context->getCrud()->getActionsConfig());
 
@@ -474,7 +477,8 @@ abstract class AbstractCrudController extends AbstractController implements Crud
         /** @var CrudControllerInterface $controller */
         $controller = $this->container->get(ControllerFactory::class)->getCrudControllerInstance($autocompleteContext[EA::CRUD_CONTROLLER_FQCN] ?? $context->getRequest()->get(EA::CRUD_CONTROLLER_FQCN), Action::INDEX, $context->getRequest());
         /** @var FieldDto|null $field */
-        $field = FieldCollection::new($controller->configureFields($autocompleteContext['originatingPage']))->getByProperty($autocompleteContext['propertyName']);
+        $fields = $this->container->get(FieldProviderInterface::class)->createCollection($controller->configureFields($autocompleteContext['originatingPage']));
+        $field = $fields->getByProperty($autocompleteContext['propertyName']);
         /** @var \Closure|null $queryBuilderCallable */
         $queryBuilderCallable = $field?->getCustomOption(AssociationField::OPTION_QUERY_BUILDER_CALLABLE);
 
@@ -494,7 +498,7 @@ abstract class AbstractCrudController extends AbstractController implements Crud
 
     public function renderFilters(AdminContext $context): KeyValueStore
     {
-        $fields = FieldCollection::new($this->configureFields(Crud::PAGE_INDEX));
+        $fields = $this->container->get(FieldProviderInterface::class)->createCollection($this->configureFields(Crud::PAGE_INDEX));
         $this->container->get(EntityFactory::class)->processFields($context->getEntity(), $fields);
         $filters = $this->container->get(FilterFactory::class)->create($context->getCrud()->getFiltersConfig(), $context->getEntity()->getFields(), $context->getEntity());
 

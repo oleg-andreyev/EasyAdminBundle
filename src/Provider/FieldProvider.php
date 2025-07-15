@@ -3,6 +3,7 @@
 namespace EasyCorp\Bundle\EasyAdminBundle\Provider;
 
 use Doctrine\DBAL\Types\Types;
+use EasyCorp\Bundle\EasyAdminBundle\Collection\FieldCollection;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Contracts\Provider\AdminContextProviderInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Contracts\Provider\FieldProviderInterface;
@@ -16,6 +17,11 @@ final class FieldProvider implements FieldProviderInterface
     public function __construct(
         private readonly AdminContextProviderInterface $adminContextProvider,
     ) {
+    }
+
+    public function createCollection(iterable $fields): FieldCollection
+    {
+        return FieldCollection::new($fields);
     }
 
     public function getDefaultFields(string $pageName): array
