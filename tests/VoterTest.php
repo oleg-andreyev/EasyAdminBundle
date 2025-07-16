@@ -37,7 +37,6 @@ class VoterTest extends AbstractCrudTestCase
     public function testingVoter()
     {
         // Arrange
-        $expectedAmountMapping = [];
         $entities = $this->repository->findAll();
 
         /** @var CustomVoter $voter */
@@ -49,13 +48,6 @@ class VoterTest extends AbstractCrudTestCase
         \Closure::bind(function () {
             $this->strategy = new UnanimousStrategy();
         }, $accessDecisionManager, $accessDecisionManager)();
-
-        /**
-         * @var Website $entity
-         */
-        foreach ($entities as $entity) {
-            $expectedAmountMapping[$entity->getName()] = $entity->getPages()->count();
-        }
 
         // Act
         $crawler = $this->client->request('GET', $this->generateIndexUrl());
